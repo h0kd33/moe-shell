@@ -1,36 +1,85 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="../bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
 <link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
 <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-
+<link rel="import" href="../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/neon-animation/neon-animation.html">
+<link rel="import" href="../bower_components/neon-animation/neon-animated-pages.html">
 <link rel="import" href="../bower_components/">
 <link rel="import" href="../moe-style/moe-style.html">
+<link rel="import" href="../moe-form/moe-form.html">
 <link rel="import" href="../moe-board-shell/moe-board-shell.html">
 <dom-module id="moe-shell">
     <style>
     :host {
-        display: inline-block;
+        display: block;
         box-sizing: border-box;
+        background-color: var(--background-color);
+        @apply(--layout-fit);
+    }
+    
+    #navbar {
+        --paper-toolbar-background: rgba(255, 255, 255, 0.3);
+        --paper-toolbar-color: var(--font-color);
+    }
+    
+    #menuNavbar {
+        --paper-toolbar-background: var(--font-color);
+        --paper-toolbar-color: var(--form-color);
+    }
+    
+    paper-dialog {
+        margin: 15px;
+    }
+    
+    moe-form {
+        width: 100%;
     }
     </style>
     <template>
+        <!-- 暫 手機彈出發文框 -->
+        <paper-dialog with-backdrop id="scrolling" class="fit" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
+            <paper-dialog-scrollable>
+                <moe-form> </moe-form>
+            </paper-dialog-scrollable>
+        </paper-dialog>
+        <!-- 本體 -->
         <paper-drawer-panel id="panel">
             <paper-header-panel drawer>
-                <paper-toolbar>
-                    <div>Application</div>
+                <paper-toolbar id="menuNavbar" class="tall">
+                    <h2>メニュー</h2>
                 </paper-toolbar>
-                <div> Drawer content... </div>
+                <paper-menu>
+                    <paper-item>Inbox</paper-item>
+                    <paper-item>Starred</paper-item>
+                    <paper-item>Sent mail</paper-item>
+                    <paper-item>Drafts</paper-item>
+                </paper-menu>
             </paper-header-panel>
-            <paper-header-panel main>
-                <paper-toolbar>
+            <paper-scroll-header-panel main >
+                <paper-toolbar id="navbar" justify="justified">
                     <paper-icon-button icon="menu" paper-drawer-toggle> </paper-icon-button>
+                    <div id="topLink" class="flex">
+                        <ul>
+                            <li><a href="#">anchor</a></li>
+                            <li><a href="#">background</a></li>
+                            <li><a href="#">dialog</a></li>
+                            <li><a href="#">element</a></li>
+                            <li><a href="#">frame</a></li>
+                        </ul>
+                    </div>
+                    <paper-icon-button data-dialog="scrolling" icon="icons:more-vert" on-click="clickHandler"> </paper-icon-button>
                 </paper-toolbar>
-                <div>
+                <neon-naimation-pages id="pages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
                     <moe-board-shell></moe-board-shell>
-                </div>
-            </paper-header-panel>
+                    <neon-animatable>2</neon-animatable>
+                </neon-naimation-pages>
+            </paper-scroll-header-panel>
         </paper-drawer-panel>
     </template>
 </dom-module>
@@ -41,6 +90,22 @@ Polymer({
 
     properties: {
 
+    },
+    clickHandler: function(e) {
+        var button = e.target;
+        while (!button.hasAttribute('data-dialog') && button !== document.body) {
+            button = button.parentElement;
+        }
+
+        if (!button.hasAttribute('data-dialog')) {
+            return;
+        }
+
+        var id = button.getAttribute('data-dialog');
+        var dialog = document.getElementById(id);
+        if (dialog) {
+            dialog.open();
+        }
     },
 
     // Element Lifecycle
