@@ -65,7 +65,7 @@
                     <paper-item>Drafts</paper-item>
                 </paper-menu>
             </paper-header-panel>
-            <paper-scroll-header-panel main >
+            <paper-scroll-header-panel id="main" on-content-scroll="_recordPosition" main >
                 <paper-toolbar id="navbar" justify="justified">
                     <paper-icon-button icon="menu" paper-drawer-toggle> </paper-icon-button>
                     <div id="topLink" class="flex">
@@ -97,6 +97,9 @@ Polymer({
             type: Number,
             value: 0,
             reflectToAttribute: true
+        },
+        recordPosition: {
+            type: Number
         }
     },
     clickHandler: function(e) {
@@ -124,10 +127,15 @@ Polymer({
             this.$.pages.entryAnimation = 'slide-from-left-animation';
             this.$.pages.exitAnimation = 'slide-right-animation';
         }
-        this.$.pages.selected = (v === 0) ? 1 : 0;
+        this.$.pages.selected = (v === 0) ? 1 : 0;        
+        v === 1?  (this.$.main.scroller.scrollTop = recordPosition) : '' ;
         console.log( this.$.pages.selected );
     },
-
+    _recordPosition: function(e){
+        var v = this.$.pages.selected;
+        v === 0 ? recordPosition = e.detail.target.scrollTop : ''; 
+        console.log( 'scroll to '+ recordPosition);       
+    },
     // Element Lifecycle
 
     ready: function() {
@@ -143,7 +151,7 @@ Polymer({
 
         var newObj = {
             forceNarrow: true
-        }
+        };
         for (key in newObj) {
             if (typeof newObj[key] !== 'undefined') {
                 this.$.panel[key] = newObj[key];
