@@ -40,6 +40,10 @@
     moe-form {
         width: 100%;
     }
+    neon-animatable {
+        height: 100vh;
+        background-color: gray;
+    }
     </style>
     <template>
         <!-- 暫 手機彈出發文框 -->
@@ -75,7 +79,7 @@
                     </div>
                     <paper-icon-button data-dialog="scrolling" icon="icons:more-vert" on-click="clickHandler"> </paper-icon-button>
                 </paper-toolbar>
-                <neon-animated-pages id="pages" class="layout horizontal" selected="{{selected}}" entry-animation="slide-from-right-animation" exit-animation="slide-left-animation"> 
+                <neon-animated-pages id="pages" class="layout horizontal" selected="{{selected}}" > 
                     <moe-board-shell on-open-article="_openArticle"></moe-board-shell>
                     <neon-animatable><paper-button on-click="_openArticle">Back</paper-button></neon-animatable>
                 </neon-animated-pages>
@@ -113,6 +117,13 @@ Polymer({
     },
     _openArticle: function() {
         var v = this.$.pages.selected;
+        if ( v === 0 ) {
+            this.$.pages.entryAnimation = 'slide-from-right-animation';
+            this.$.pages.exitAnimation = 'slide-left-animation';
+        } else {
+            this.$.pages.entryAnimation = 'slide-from-left-animation';
+            this.$.pages.exitAnimation = 'slide-right-animation';
+        }
         this.$.pages.selected = (v === 0) ? 1 : 0;
         console.log( this.$.pages.selected );
     },
