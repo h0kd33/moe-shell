@@ -9,7 +9,6 @@
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../bower_components/neon-animation/neon-animation.html">
-<link rel="import" href="../bower_components/neon-animation/neon-animated-pages.html">
 <link rel="import" href="../bower_components/">
 <link rel="import" href="../moe-style/moe-style.html">
 <link rel="import" href="../moe-form/moe-form.html">
@@ -20,6 +19,7 @@
         display: block;
         box-sizing: border-box;
         background-color: var(--background-color);
+        position: relative;
         @apply(--layout-fit);
     }
     
@@ -75,10 +75,10 @@
                     </div>
                     <paper-icon-button data-dialog="scrolling" icon="icons:more-vert" on-click="clickHandler"> </paper-icon-button>
                 </paper-toolbar>
-                <neon-naimation-pages id="pages" class="flex" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
-                    <moe-board-shell></moe-board-shell>
-                    <neon-animatable>2</neon-animatable>
-                </neon-naimation-pages>
+                <neon-animated-pages id="pages" class="layout fit" selected="{{selected}}" entry-animation="slide-from-right-animation" exit-animation="slide-left-animation"> 
+                    <moe-board-shell on-open-article="_openArticle"></moe-board-shell>
+                    <neon-animatable id="page2" on-click="_openArticle" class="flex" style="background: gray;">2</neon-animatable>
+                </neon-animated-pages>
             </paper-scroll-header-panel>
         </paper-drawer-panel>
     </template>
@@ -89,7 +89,11 @@ Polymer({
     is: 'moe-shell',
 
     properties: {
-
+        selected: {
+            type: Number,
+            value: 0,
+            reflectToAttribute: true
+        }
     },
     clickHandler: function(e) {
         var button = e.target;
@@ -106,6 +110,11 @@ Polymer({
         if (dialog) {
             dialog.open();
         }
+    },
+    _openArticle: function() {
+        var v = this.$.pages.selected;
+        this.$.pages.selected = (v === 0) ? 1 : 0;
+        console.log( this.$.pages.selected );
     },
 
     // Element Lifecycle
