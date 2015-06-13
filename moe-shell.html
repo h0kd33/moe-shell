@@ -75,9 +75,9 @@
                     </div>
                     <paper-icon-button data-dialog="scrolling" icon="icons:more-vert" on-click="clickHandler"> </paper-icon-button>
                 </paper-toolbar>
-                <neon-animated-pages id="pages" class="layout fit" selected="{{selected}}" entry-animation="slide-from-right-animation" exit-animation="slide-left-animation"> 
+                <neon-animated-pages id="pages" class="layout horizontal" selected="{{selected}}" entry-animation="slide-from-right-animation" exit-animation="slide-left-animation"> 
                     <moe-board-shell on-open-article="_openArticle"></moe-board-shell>
-                    <neon-animatable id="page2" on-click="_openArticle" class="flex" style="background: gray;">2</neon-animatable>
+                    <neon-animatable><paper-button on-click="_openArticle">Back</paper-button></neon-animatable>
                 </neon-animated-pages>
             </paper-scroll-header-panel>
         </paper-drawer-panel>
