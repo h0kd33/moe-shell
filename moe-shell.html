@@ -44,8 +44,8 @@
             </paper-dialog-scrollable>
         </paper-dialog>
         <!-- 本體 -->
-        <paper-drawer-panel id="leftPanel">
-            <paper-header-panel id="leftDrawer" drawer>
+        <paper-drawer-panel disable-swipe$="{{disableSwipe}}" id="leftDrawer">
+            <paper-header-panel  drawer>
                 <paper-toolbar id="menuNavbar" class="tall">
                     <h2>メニュー</h2>
                 </paper-toolbar>
@@ -57,7 +57,7 @@
                 </paper-menu>
             </paper-header-panel>
             <paper-header-panel id="main" main>
-                <moe-board-shell></moe-board-shell>
+                <moe-board-shell on-toggle-parent-drawer="_toggleLeftDrawer" on-article-drawer-opend-changed="_disableSwipe" id="moeBoardShell"></moe-board-shell>
             </paper-header-panel>
         </paper-drawer-panel>
     </template>
@@ -74,7 +74,11 @@ Polymer({
             reflectToAttribute: true
         },
         recordPosition: {
-            type: Number
+            type: Number,
+            value: false
+        },
+        disableSwipe: {
+            type: Boolean     
         }
     },
     clickHandler: function(e) {
@@ -98,32 +102,26 @@ Polymer({
         v === 0 ? recordPosition = e.detail.target.scrollTop : '';
         console.log('scroll to ' + recordPosition);
     },
-    _drawerEvent: function(e) {
-        console.log('something changed: ' + e.detail);
+    _toggleLeftDrawer: function(e) {
+        this.$.leftDrawer.openDrawer();
+    },
+    _disableSwipe: function(e){
+        e.detail.value === true ? this.disableSwipe = true : this.disableSwipe = false; 
     },
 
     // Element Lifecycle
 
     ready: function() {
-        this.$.leftPanel.forceNarrow = true;
+        this.$.leftDrawer.forceNarrow = true;
 
         var newObj = {
             forceNarrow: true
         };
         for (key in newObj) {
             if (typeof newObj[key] !== 'undefined') {
-                this.$.leftPanel[key] = newObj[key];
+                this.$.leftDrawer[key] = newObj[key];
             }
         }
-
-        // 監控 drawer style cahnged 避免拖移時選取內文
-        this.$.leftDrawer.parentElement.addEventListener('DOMAttrModified', function(e) {
-            console.log('attr chnage');
-            if (e.attrName === 'style') {
-                console.log('prevValue: ' + e.prevValue, 'newValue: ' + e.newValue);
-            }
-        }, false);
-
     },
 
     attached: function() {
