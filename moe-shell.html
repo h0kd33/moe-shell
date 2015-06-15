@@ -8,7 +8,6 @@
 <link rel="import" href="../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
-
 <link rel="import" href="../moe-style/moe-style.html">
 <link rel="import" href="../moe-form/moe-form.html">
 <link rel="import" href="../moe-board-shell/moe-board-shell.html">
@@ -77,7 +76,7 @@ Polymer({
             value: false
         },
         disableSwipe: {
-            type: Boolean     
+            type: Boolean
         }
     },
     clickHandler: function(e) {
@@ -98,14 +97,14 @@ Polymer({
     },
     _recordPosition: function(e) {
         var v = this.$.pages.selected;
-        v === 0 ? recordPosition = e.detail.target.scrollTop : '';
+        v === 0 ? recordPosition = e.detail.target.scrollTop : "";
         console.log('scroll to ' + recordPosition);
     },
     _toggleLeftDrawer: function(e) {
         this.$.leftDrawer.openDrawer();
     },
-    _disableSwipe: function(e){
-        e.detail.value === true ? this.disableSwipe = true : this.disableSwipe = false; 
+    _disableSwipe: function(e) {
+        e.detail.value === true ? this.disableSwipe = true : this.disableSwipe = false;
     },
     _onDragging: function() {
         window.getSelection().empty();
