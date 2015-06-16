@@ -10,7 +10,7 @@
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../moe-style/moe-style.html">
 <link rel="import" href="../moe-form/moe-form.html">
-<link rel="import" href="../moe-board-shell/moe-board-shell.html">
+<link rel="import" href="../moe-board/moe-board.html">
 <dom-module id="moe-shell">
     <style>
     :host {
@@ -20,7 +20,6 @@
         position: relative;
         @apply(--layout-fit);
     }
-    
     #menuNavbar {
         --paper-toolbar-background: var(--font-color);
         --paper-toolbar-color: var(--form-color);
@@ -42,7 +41,7 @@
             </paper-dialog-scrollable>
         </paper-dialog>
         <!-- 本體 -->
-        <paper-drawer-panel disable-swipe$="{{disableSwipe}}" id="leftDrawer" on-dragging-changed="_onDragging">
+        <paper-drawer-panel force-narrow disable-swipe$="{{disableSwipe}}" id="leftDrawer" on-dragging-changed="_onDragging">
             <paper-header-panel drawer>
                 <paper-toolbar id="menuNavbar" class="tall">
                     <h2>メニュー</h2>
@@ -55,7 +54,7 @@
                 </paper-menu>
             </paper-header-panel>
             <paper-header-panel id="main" main>
-                <moe-board-shell on-toggle-parent-drawer="_toggleLeftDrawer" on-article-drawer-opend-changed="_disableSwipe" id="moeBoardShell"></moe-board-shell>
+                <moe-board on-toggle-parent-drawer="_toggleLeftDrawer" on-article-drawer-opend-changed="_disableSwipe" id="moeBoardShell"></moe-board>
             </paper-header-panel>
         </paper-drawer-panel>
     </template>
@@ -108,29 +107,6 @@ Polymer({
     },
     _onDragging: function() {
         window.getSelection().empty();
-    },
-
-    // Element Lifecycle
-
-    ready: function() {
-        this.$.leftDrawer.forceNarrow = true;
-
-        var newObj = {
-            forceNarrow: true
-        };
-        for (key in newObj) {
-            if (typeof newObj[key] !== 'undefined') {
-                this.$.leftDrawer[key] = newObj[key];
-            }
-        }
-    },
-
-    attached: function() {
-
-    },
-
-    detached: function() {
-
-    },
+    }
 });
 </script>
