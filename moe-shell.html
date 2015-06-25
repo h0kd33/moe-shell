@@ -20,6 +20,7 @@
         position: relative;
         @apply(--layout-fit);
     }
+    
     #menuNavbar {
         --paper-toolbar-background: var(--font-color);
         --paper-toolbar-color: var(--form-color);
@@ -41,9 +42,9 @@
             </paper-dialog-scrollable>
         </paper-dialog>
         <!-- 本體 -->
-        <paper-drawer-panel force-narrow disable-swipe$="{{disableSwipe}}" id="leftDrawer" on-dragging-changed="_onDragging">
+        <paper-drawer-panel force-narrow disable-swipe$="{{disableSwipe}}" id="leftDrawer" on-dragging-changed="_onDrawerDragging">
             <paper-header-panel drawer>
-                <paper-toolbar id="menuNavbar" class="tall">
+                <paper-toolbar id="menuNavbar" class="tall" moePreventSelect> 
                     <h2>メニュー</h2>
                 </paper-toolbar>
                 <paper-menu>
@@ -63,6 +64,9 @@
 Polymer({
 
     is: 'moe-shell',
+    behaviors: [
+        MoeUtilityBehavior
+    ],
 
     properties: {
         selected: {
@@ -105,7 +109,7 @@ Polymer({
     _disableSwipe: function(e) {
         e.detail.value === true ? this.disableSwipe = true : this.disableSwipe = false;
     },
-    _onDragging: function() {
+    _onDrawerDragging: function() {
         window.getSelection().empty();
     }
 });
