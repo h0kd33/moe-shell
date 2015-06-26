@@ -44,7 +44,7 @@
         <!-- 本體 -->
         <paper-drawer-panel force-narrow disable-swipe$="{{disableSwipe}}" id="leftDrawer" on-dragging-changed="_onDrawerDragging">
             <paper-header-panel drawer>
-                <paper-toolbar id="menuNavbar" class="tall" moePreventSelect> 
+                <paper-toolbar id="menuNavbar" class="tall" moePreventSelect>
                     <h2>メニュー</h2>
                 </paper-toolbar>
                 <paper-menu>
@@ -55,7 +55,7 @@
                 </paper-menu>
             </paper-header-panel>
             <paper-header-panel id="main" main>
-                <moe-board on-toggle-parent-drawer="_toggleLeftDrawer" on-article-drawer-opend-changed="_disableSwipe" id="moeBoardShell"></moe-board>
+                <moe-board on-toggle-parent-drawer="_toggleLeftDrawer" on-article-drawer-opend-changed="_disableSwipe" id="moeBoardShell" on-request-articles="_requestArticle"></moe-board>
             </paper-header-panel>
         </paper-drawer-panel>
     </template>
@@ -97,6 +97,111 @@ Polymer({
         if (dialog) {
             dialog.open();
         }
+    },
+    // 請求文章
+    _requestArticle: function(e) {
+        // dummy content
+        var arr = [{
+            serial: 54764654,
+            identity: 'dIW12Afc',
+            commentTitle: "不會游泳怎麼辦?",
+            username: "無名",
+            content: '<a href="http://homu.komica.org/00/index.php?res=6503972">http://homu.komica.org/00/index.php?res=6503972</a><br><blockquote>會說初音過氣八成對這塊認識也不深</blockquote>有什麼數據來證明初音還沒過氣阿?<br>新投稿的作品數和再生數都逐年激減了耶<br> 布丁好吃',
+            comments: [{
+                serial: 123456,
+                commentTitle: "不會游泳怎麼辦?",
+                userName: "無名",
+                content: '<a href="http://homu.komica.org/00/index.php?res=6503972">http://homu.komica.org/00/index.php?res=6503972</a><br><blockquote>會說初音過氣八成對這塊認識也不深</blockquote>有什麼數據來證明初音還沒過氣阿?<br>新投稿的作品數和再生數都逐年激減了耶<br> 布丁好吃',
+                imgNo: "01",
+                identity: 'dIW12Afc'
+            }, {
+                serial: 123456,
+                commentTitle: "不會游泳怎麼辦?",
+                userName: "無名",
+                content: "<a class='post-number'>NO.1234</a>不會游泳，現在要進去海陸新訓了........<br>覺這一年當兵生活會很慘",
+                imgNo: "01",
+                identity: 'ASss2afc'
+            }, {
+                serial: 45623,
+                commentTitle: "ㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZㄈㄓZ",
+                userName: "ㄈㄓZ",
+                content: "李嫌和王女原本約在高鐵台南站見面，因鄰居發現王母失蹤",
+                imgNo: "02",
+                identity: 'sSoa!eW',
+                CLASS: "highlight"
+            }, {
+                serial: "78,645,456",
+                commentTitle: "",
+                userName: "",
+                content: "外來種賤女狗公惱羞開始血尿跳針哭哭ㄛwwwwww<br>護航乙",
+                imgNo: "03",
+                identity: 'dIW12Afc'
+            }, {
+                serial: 456456,
+                commentTitle: "",
+                userName: "",
+                content: "<blockquote>搞不好李搞不好李搞不好李搞不好李搞不好李搞</blockquote>不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李w好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李搞不好李嫌跟王女真的有交往過<br>因為某某原因而否認了<br>就跟以前認識某女明明就有暗示我告白<br>結果我沒告白就到處抹黒我說我有嚴重妄想症一樣",
+                imgNo: "04",
+                identity: 'dIgFasd'
+            }, {
+                serial: 353453,
+                commentTitle: "",
+                userName: "",
+                content: "無本文",
+                imgNo: "15",
+                identity: 'dIW12Afc',
+            }, {
+                serial: 453,
+                commentTitle: "",
+                userName: "",
+                content: "<a href='#'>www.google.com</a>為什麼支那賤畜一聽到台灣女生說話就射啦<br>我剛剛無聊上百度搜尋台灣女生，發現很多426很哈台灣的劍",
+                imgNo: "16",
+                identity: 'ASss2afc'
+            }, {
+                serial: 123456,
+                commentTitle: "",
+                userName: "",
+                content: "問一下 問答板為什麼只能設3個問題? 我看其他人都25題耶",
+                imgNo: "17",
+                identity: 'ASss2afc'
+            }, {
+                serial: 453453,
+                commentTitle: "",
+                userName: "",
+                content: "有島民學過速讀嗎?<br>我想要自學卻不知道要怎麼入門",
+                imgNo: "18",
+            }, {
+                serial: 51245,
+                commentTitle: "",
+                userName: "",
+                content: "有島民知道拿熱水沖屁眼完5分鐘在拿冷水沖是什麼感覺嗎",
+                imgNo: "",
+                identity: 'aSASFDSSc'
+            }, {
+                serial: 7857853435,
+                commentTitle: "",
+                userName: "",
+                content: "有什麼地方可以吹冷氣又有插座?",
+                imgNo: "20",
+                identity: 'QewAafc'
+            }]
+        }];
+
+        // 插入隨機大小圖片
+        arr[0].comments.forEach(function(e) {
+            var host = "http://lorempixel.com/";
+            var dise = Math.random() * 1;
+            var random = function() {
+                return Math.floor(Math.random() * 100 + 50);
+            };
+            dise >= 0.75 ? e.imgsrc = host + "/" + random() + "/" + random() + "/" + "cats" : undefined;
+        });
+        // 插入三次文章
+        var counts = 3;
+        for (var i = counts; i--; i > 0) {
+            arr.push(arr[0]);
+        }
+        e.path[0].articles = arr;
     },
     _recordPosition: function(e) {
         var v = this.$.pages.selected;
